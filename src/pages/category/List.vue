@@ -3,7 +3,7 @@
     
     <el-button type="success" size="small" @click="toAddHandler">添加</el-button>
     <el-button type="danger" size="small">批量删除</el-button>
-    <el-table :data="customers">
+    <el-table :data="categorys">
       <el-table-column
       type="selection"
       width="55">
@@ -17,7 +17,7 @@
                 <!-- <a href=""  @click.prevent="toDeleteHandler(slot.row.id)">删除</a>
                 <a href="" @click.prevent="toUpdateHandler">修改</a> -->
                 <i class="el-icon-delete" @click.prevent="toDeleteHandler(slot.row.id)"></i>
-                <i class="el-icon-edit-outline" @click.prevent="toUpdateHandler"></i>
+                <i class="el-icon-edit-outline" @click.prevent="toUpdateHandler(slot.row)"></i>
             </template>
         </el-table-column>
     </el-table>
@@ -60,8 +60,8 @@ export default {
         // VUE实例创建完毕
         let url ="http://localhost:6677/category/findAll"
         request.get(url).then((response)=>{
-          //将查询结果设置到customers中
-          this.customers = response.data;
+          //将查询结果设置到categorys中
+          this.categorys = response.data;
         })
       },
       submitHandler(){
@@ -85,14 +85,15 @@ export default {
             })
         },
         toAddHandler(){
-          this.title="修改栏目信息";
+          this.title="添加栏目信息";
           this.visible=true;
         },
         closeModalHandler(){
           this.visible=false;
         },
-        toUpdateHandler(){
+        toUpdateHandler(row){
           this.title="修改栏目信息";
+          this.form=row;
           this.visible=true;
         },
         toDeleteHandler(id){
@@ -101,25 +102,32 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          //调用后台接口，完成删除操作
+          let url = "http://localhost:6677/category/deleteById?id="+id;
+          request.get(url).then((request)=>{
+            //刷新数据
+            this.loadData();
+            //提示消息
           this.$message({
             type: 'success',
-            message: '删除成功!'+id
+            message: '删除成功!'
           });
-        }).catch(() => {
+        });
+      }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });          
         });
-        }
+      }
     },
     data(){
         
         return{
             visible:false,
-            customers:[],
+            categorys:[],
             form:{
-              type:"customer"
+              type:"category"
             }
         } 
     },
