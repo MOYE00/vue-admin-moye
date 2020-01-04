@@ -104,6 +104,9 @@ export default {
         },
         toAddHandler(){
           this.title="添加栏目信息";
+          this.form = {
+            type:"product"
+          }
           this.visible=true;
         },
         closeModalHandler(){

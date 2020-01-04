@@ -86,6 +86,9 @@ export default {
         },
         toAddHandler(){
           this.title="添加栏目信息";
+          this.form = {
+            type:"category"
+          }
           this.visible=true;
         },
         closeModalHandler(){

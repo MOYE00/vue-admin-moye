@@ -103,6 +103,9 @@ export default {
           this.form = {
             type:"waiter"
           }
+          this.form = {
+            type:"waiter"
+          }
           this.visible=true;
         },
         closeModalHandler(){
