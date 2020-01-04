@@ -103,7 +103,7 @@ export default {
             })
         },
         toAddHandler(){
-          this.title="添加栏目信息";
+          this.title="添加产品信息";
           this.form = {
             type:"product"
           }
@@ -113,7 +113,7 @@ export default {
           this.visible=false;
         },
         toUpdateHandler(row){
-          this.title="修改栏目信息";
+          this.title="修改产品信息";
           this.form=row;
           this.visible=true;
         },
